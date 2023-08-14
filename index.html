@@ -13,33 +13,40 @@
             color: #333;
         }
         header {
-            background-color: #333;
+            background-color: #000;
             color: #fff;
             padding: 1rem;
             text-align: center;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
+        .menu {
+            float: left;
+            width: 20%;
+            background-color: #ddd;
+            padding: 2rem 1rem;
             text-align: center;
+            height: 100vh;
+        }
+        .content {
+            float: right;
+            width: 80%;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .menu-link {
+            display: block;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #333;
         }
         .profile-image {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-        }
-        .social-links {
-            margin-top: 1.5rem;
         }
         .social-link {
             display: inline-block;
@@ -52,9 +59,14 @@
 <body>
     <header>
         <h1>Your Name</h1>
-        <p>Web Developer &amp; Designer</p>
     </header>
-    <div class="container">
+    <div class="menu">
+        <a class="menu-link" href="#about"><i class="fas fa-user"></i> About</a>
+        <a class="menu-link" href="#literature"><i class="fas fa-book"></i> Literature</a>
+        <a class="menu-link" href="#activities"><i class="fas fa-futbol"></i> Activities</a>
+        <a class="menu-link" href="#pictures"><i class="fas fa-camera"></i> Pictures</a>
+    </div>
+    <div class="content">
         <img class="profile-image" src="profile.jpg" alt="Your Name">
         <h1>Welcome to My Personal Website</h1>
         <p>Hi there! I'm passionate about creating awesome websites and applications. Connect with me on social media!</p>
