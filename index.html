@@ -9,156 +9,92 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f3f3f3;
-            color: #333;
-        }
-        header {
             background-color: #000;
             color: #fff;
-            text-align: left;
-            padding: 0 0 0 1rem;
-            height: 3rem; /* Set the header's height */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        header {
+            position: absolute;
             top: 0;
-            line-height: 2.5rem;
             width: 100%;
-            position: fixed;
-            z-index: 1000;
-            
-        }
-        .menu {
-            float: left;
-            top: 3rem;
-            width: 10%;
-            background-color: #ddd;
-            padding: 1rem .5rem;
             text-align: center;
-            height: 100%;
-            position: fixed;
+            padding: 1rem 0;
+            background-color: #000;
         }
-        .content {
-            margin-left: 10%;
-            margin-top: 1rem;
+        .scroll-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 80%;
+            background: url('scroll-background.png') center/cover no-repeat;
+            border: 5px solid #d4af37;
+            border-radius: 10px;
             padding: 2rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            overflow-y: auto;
         }
-        h1 {
-            font-size: 4rem;
-            margin-bottom: 0.5rem;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 0;
-        }
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-top: 0;
-        }
-        h1 a {
-            text-decoration: none;
-            color: inherit;
-        }
-        .menu-link {
-            display: block;
-            margin-bottom: 1rem;
-            text-decoration: none;
+        .scroll-content {
             font-size: 1.2rem;
-            color: #333;
+            line-height: 1.5;
         }
-        .profile-image {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            z-index: 10;
         }
-        .social-link {
-            display: inline-block;
-            margin: 0 10px;
-            font-size: 1.5rem;
-            color: #333;
+        .nav-arrow.left {
+            left: 0;
         }
-         @media (max-width: 768px) {
-            header {
-                padding: 0.5rem;
-            }
-            .menu {
-                width: 100%;
-                padding: 1rem 0.5rem;
-                position: relative;
-                float: none;
-            }
-            .content {
-                margin-left: 0;
-                margin-top: 3rem;
-                padding: 1rem;
-            }
-            .menu-link {
-                font-size: 1rem;
-            }
-        }
-        html {
-            scroll-behavior: smooth;
+        .nav-arrow.right {
+            right: 0;
         }
     </style>
 </head>
 <body>
-    <header class="site-header">
-        <h1><a href="#">Preston Nabors</a></h1>
+    <header>
+        <h1>Your Name</h1>
     </header>
-    <div class="menu">
-        <a class="menu-link" href="#About-Me"><i class="fas fa-user"></i> About Me</a>
-        <a class="menu-link" href="#Bowl-Bear"><i class="fas fa-book"></i> Bowl Bear</a>
-        <a class="menu-link" href="#Résumé"><i class="fas fa-futbol"></i> Résumé</a>
-    </div>
-    <div class="content">
-        <h2 id="About-Me">About Me</h2>
-        <div id="about-me-content"></div>  
-        <h2 id="Bowl-Bear">Bowl Bear</h2>
-        <div id="bowl-bear-content"></div>
-        <h2 id="Résumé">Résumé</h2>
-        <iframe src="Resume.pdf" width="100%" height="600px"></iframe>
-
-        <div class="social-links">
-            <a class="social-link" href="#"><i class="fab fa-twitter"></i></a>
-            <a class="social-link" href="#"><i class="fab fa-linkedin"></i></a>
-            <a class="social-link" href="#"><i class="fab fa-github"></i></a>
+    <i class="fas fa-chevron-left nav-arrow left"></i>
+    <div class="scroll-container">
+        <div class="scroll-content" id="scroll-content">
+            <!-- Scroll content will be loaded here -->
         </div>
     </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const headerHeight = document.querySelector("header").offsetHeight;
-        
-        // Fetch text from the text file and insert it into the placeholder
-        fetch('about-me.txt')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('about-me-content').textContent = data;
-            });
-        fetch('bowl-bear.txt')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('bowl-bear-content').textContent = data;
-            });
-        const menuLinks = document.querySelectorAll(".menu-link");
+    <i class="fas fa-chevron-right nav-arrow right"></i>
 
-        menuLinks.forEach(function (link) {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
+    <script>
+        const scrolls = ['about-me.txt', 'bowl-bear.txt', 'resume.txt'];
+        let currentScrollIndex = 0;
 
-                const targetId = link.getAttribute("href");
-                const targetElement = document.querySelector(targetId);
-
-                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: "smooth"
+        function loadScrollContent(index) {
+            fetch(scrolls[index])
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('scroll-content').textContent = data;
                 });
-            });
+        }
+
+        document.querySelector('.nav-arrow.left').addEventListener('click', () => {
+            currentScrollIndex = (currentScrollIndex - 1 + scrolls.length) % scrolls.length;
+            loadScrollContent(currentScrollIndex);
         });
-    });
-</script>
+
+        document.querySelector('.nav-arrow.right').addEventListener('click', () => {
+            currentScrollIndex = (currentScrollIndex + 1) % scrolls.length;
+            loadScrollContent(currentScrollIndex);
+        });
+
+        // Load the first scroll content on page load
+        loadScrollContent(currentScrollIndex);
+    </script>
 </body>
 </html>
