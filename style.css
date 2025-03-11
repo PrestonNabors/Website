@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+#header-container {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    height: 3rem; /* Adjust as needed */
+}
+
+#sidebar-container {
+    width: 15%;
+    background-color: #ddd;
+    height: calc(100vh - 6rem); /* Assuming header and footer are each 3rem high */
+    position: fixed;
+    top: 3rem; /* Height of the header */
+    left: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#content-container {
+    margin-left: 15%; /* Same as sidebar width */
+    margin-top: 3rem; /* Height of the header */
+    margin-bottom: 3rem; /* Height of the footer */
+    padding: 1rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    height: calc(100vh - 6rem); /* Adjust for header and footer height */
+    overflow-y: auto;
+}
+
+#footer-container {
+    width: 100%;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    height: 3rem; /* Adjust as needed */
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.content {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    box-sizing: border-box;
+}
