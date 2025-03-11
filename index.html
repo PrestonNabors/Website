@@ -143,6 +143,9 @@
                         contentDiv.innerHTML = '<iframe src="' + url + '" width="100%" height="600px"></iframe>';
                     } else {
                         contentDiv.innerHTML = '<pre>' + data + '</pre>';
+                        if (filePath === 'welcome.html') {
+                            contentDiv.innerHTML += '<div id="model">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</div>';
+                        }
                     }
                 });
         }
