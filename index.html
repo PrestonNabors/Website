@@ -31,7 +31,7 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    if (fileType === 'pdf') {
+                    if (fileType === 'pdf' || fileType === 'png') {
                         return response.blob();
                     } else {
                         return response.text();
@@ -41,16 +41,43 @@
                     const contentDiv = document.getElementById('content');
                     if (fileType === 'pdf') {
                         const url = URL.createObjectURL(data);
-                        contentDiv.innerHTML = '<iframe src="' + url + '" width="100%" height="600px"></iframe>';
+                        contentDiv.innerHTML = `<iframe src="${url}" width="100%" height="600px"></iframe>`;
+                    } else if (fileType === 'png') {
+                        const url = URL.createObjectURL(data);
+                        contentDiv.innerHTML = `<img src="${url}" alt="Image" style="width:100%;">`;
                     } else {
-                        contentDiv.innerHTML = '<pre>' + data + '</pre>';
+                        contentDiv.innerHTML = `<div>${data}</div>`;
                     }
+                    applyPageSpecificStyles(filePath, fileType);
                 })
                 .catch(error => {
                     const contentDiv = document.getElementById('content');
                     contentDiv.innerHTML = '<div class="error-message">Error loading content</div>';
                     console.error('Error loading file content:', error);
                 });
+        }
+
+        // Function to apply page-specific styles
+        function applyPageSpecificStyles(filePath, fileType) {
+            // Define styles for specific txt files
+            const txtStyles = `
+                body {
+                    font-family: 'Georgia', serif;
+                    background-color: #f0f0f0;
+                    color: #333;
+                }
+            `;
+
+            // Apply styles based on file type
+            if (fileType === 'txt') {
+                const styleElement = document.createElement('style');
+                styleElement.innerHTML = txtStyles;
+                document.head.appendChild(styleElement);
+            } else if (fileType === 'html') {
+                // No additional styles needed, HTML files will render their own styles
+            } else if (fileType === 'pdf' || fileType === 'png') {
+                // No additional styles needed for PDF and PNG files
+            }
         }
 
         // Function to format the file name
