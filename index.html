@@ -1,113 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preston Nabors - Personal Website</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background-color: #f3f3f3;
-            color: #333;
-            line-height: 1.6;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
-        }
-        header {
-            background-color: #000;
-            color: #fff;
-            text-align: left;
-            padding: 0 0 0 1rem;
-            height: 3rem;
-            top: 0;
-            line-height: 2.5rem;
-            width: 100%;
-            position: fixed;
-            z-index: 1000;
-        }
-        .menu {
-            position: fixed;
-            top: 3rem;
-            left: 0;
-            width: 15%;
-            background-color: #ddd;
-            padding: 1rem .5rem;
-            text-align: center;
-            height: calc(100vh - 3rem);
-            overflow-y: auto;
-            box-sizing: border-box;
-            z-index: 1000;
-        }
-        .content {
-            margin-left: 17%;
-            margin-top: 3rem; /* Adjusted margin to avoid header overlap */
-            padding: 2rem;
-            max-width: 70%;
-            overflow-wrap: break-word; /* Ensure long words break to the next line */
-            word-wrap: break-word; /* Ensure long words break to the next line */
-            word-break: break-word; /* Ensure long words break to the next line */
-            box-sizing: border-box; /* Include padding in the element's width */
-            border: 2px solid red; /* Debugging border */
-        }
-        #header-container {
-            border: 2px solid blue; /* Debugging border */
-        }
-        #footer-container {
-            border: 2px solid green; /* Debugging border */
-        }
-        .loading-message, .error-message {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 1.2rem;
-            color: #888;
-            border: 2px solid orange; /* Debugging border */
-        }
-        @media (max-width: 768px) {
-            .content {
-                margin-left: 0;
-                margin-top: 3rem;
-                padding: 1rem;
-                max-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Include header -->
-    <div id="header-container"></div>
-    <div class="loading-message" id="loading-header">Loading header...</div>
-    <div class="content" id="content">
-        <!-- Content will be dynamically loaded here -->
-    </div>
-    <div class="loading-message" id="loading-footer">Loading footer...</div>
-    <!-- Include footer -->
-    <div id="footer-container"></div>
+<div class="content" id="content">
+    <!-- Content will be dynamically loaded here -->
+</div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Load header and footer
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-                document.getElementById('loading-header').style.display = 'none';
-                initializeSidebar();
-            })
-            .catch(error => {
-                document.getElementById('loading-header').textContent = 'Error loading header';
-                console.error('Error loading header:', error);
-            });
-
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-container').innerHTML = data;
-                document.getElementById('loading-footer').style.display = 'none';
-            })
-            .catch(error => {
-                document.getElementById('loading-footer').textContent = 'Error loading footer';
-                console.error('Error loading footer:', error);
-            });
+        const headerHeight = document.querySelector("header") ? document.querySelector("header").offsetHeight : 0;
 
         // Function to fetch and display the content of a file
         function loadFileContent(filePath, fileType) {
@@ -178,7 +74,8 @@
                 });
             });
         }
+
+        // Initialize the sidebar after the header is loaded
+        initializeSidebar();
     });
 </script>
-</body>
-</html>
