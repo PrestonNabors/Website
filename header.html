@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preston Nabors - Personal Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f3f3f3;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        header {
+            background-color: #000;
+            color: #fff;
+            text-align: left;
+            padding: 0 0 0 1rem;
+            height: 3rem;
+            top: 0;
+            line-height: 2.5rem;
+            width: 100%;
+            position: fixed;
+            z-index: 1000;
+        }
+        .menu {
+            float: left;
+            top: 3rem;
+            width: 15%;
+            background-color: #ddd;
+            padding: 1rem .5rem;
+            text-align: center;
+            height: 100%;
+            position: fixed;
+            overflow-y: auto;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 0;
+        }
+        h1 a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .menu-link {
+            display: block;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        @media (max-width: 768px) {
+            header {
+                padding: 0.5rem;
+            }
+            .menu {
+                width: 100%;
+                padding: 1rem 0.5rem;
+                position: relative;
+                float: none;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <h1><a href="#">Preston Nabors</a></h1>
+    </header>
+    <div class="menu" id="fileMenu">
+        <!-- Sidebar will be populated by JavaScript -->
+    </div>
