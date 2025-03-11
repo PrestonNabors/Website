@@ -12,6 +12,9 @@
             background-color: #f3f3f3;
             color: #333;
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         header {
             background-color: #000;
@@ -26,21 +29,21 @@
             z-index: 1000;
         }
         .menu {
-            float: left;
             top: 3rem;
-            width: 10%;
+            width: 100%;
             background-color: #ddd;
             padding: 1rem .5rem;
             text-align: center;
-            height: 100%;
+            height: auto;
             position: fixed;
             overflow-y: auto;
         }
         .content {
-            margin-left: 12%;
-            margin-top: 3rem;
+            margin-top: 6rem;
             padding: 2rem;
             max-width: 800px;
+            width: 100%;
+            box-sizing: border-box;
         }
         h1 {
             font-size: 2.5rem;
