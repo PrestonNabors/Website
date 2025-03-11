@@ -12,9 +12,7 @@
             background-color: #f3f3f3;
             color: #333;
             line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
         header {
             background-color: #000;
@@ -29,21 +27,25 @@
             z-index: 1000;
         }
         .menu {
+            float: left;
             top: 3rem;
-            width: 100%;
+            width: 15%;
             background-color: #ddd;
             padding: 1rem .5rem;
             text-align: center;
-            height: auto;
+            height: 100%;
             position: fixed;
             overflow-y: auto;
         }
         .content {
-            margin-top: 6rem;
+            margin-left: 17%;
+            margin-top: 3rem;
             padding: 2rem;
             max-width: 800px;
-            width: 100%;
-            box-sizing: border-box;
+            overflow-wrap: break-word; /* Ensure long words break to the next line */
+            word-wrap: break-word; /* Ensure long words break to the next line */
+            word-break: break-word; /* Ensure long words break to the next line */
+            box-sizing: border-box; /* Include padding in the element's width */
         }
         h1 {
             font-size: 2.5rem;
@@ -146,9 +148,6 @@
                         contentDiv.innerHTML = '<iframe src="' + url + '" width="100%" height="600px"></iframe>';
                     } else {
                         contentDiv.innerHTML = '<pre>' + data + '</pre>';
-                        if (filePath === 'welcome.html') {
-                            contentDiv.innerHTML += '<div id="model">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</div>';
-                        }
                     }
                 });
         }
