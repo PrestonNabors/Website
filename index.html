@@ -3,12 +3,34 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const headerHeight = document.querySelector("header") ? document.querySelector("header").offsetHeight : 0;
+        // Load header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('afterbegin', data);
+                initializeSidebar();
+            })
+            .catch(error => {
+                console.error('Error loading header:', error);
+            });
+
+        // Load footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.body.insertAdjacentHTML('beforeend', data);
+            })
+            .catch(error => {
+                console.error('Error loading footer:', error);
+            });
 
         // Function to fetch and display the content of a file
         function loadFileContent(filePath, fileType) {
             fetch(filePath)
                 .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
                     if (fileType === 'pdf') {
                         return response.blob();
                     } else {
@@ -65,7 +87,7 @@
                     const targetId = link.getAttribute("href");
                     const targetElement = document.querySelector(targetId);
 
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
 
                     window.scrollTo({
                         top: targetPosition,
@@ -74,8 +96,5 @@
                 });
             });
         }
-
-        // Initialize the sidebar after the header is loaded
-        initializeSidebar();
     });
 </script>
