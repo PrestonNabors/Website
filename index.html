@@ -118,16 +118,28 @@
         const headerHeight = document.querySelector("header").offsetHeight;
 
         // Function to fetch and display the content of a file
-        function loadFileContent(fileName) {
-            fetch('pages/' + fileName)
-                .then(response => response.text())
+        function loadFileContent(filePath, fileType) {
+            fetch(filePath)
+                .then(response => {
+                    if (fileType === 'pdf') {
+                        return response.blob();
+                    } else {
+                        return response.text();
+                    }
+                })
                 .then(data => {
-                    document.getElementById('content').innerHTML = '<pre>' + data + '</pre>';
+                    const contentDiv = document.getElementById('content');
+                    if (fileType === 'pdf') {
+                        const url = URL.createObjectURL(data);
+                        contentDiv.innerHTML = '<iframe src="' + url + '" width="100%" height="600px"></iframe>';
+                    } else {
+                        contentDiv.innerHTML = '<pre>' + data + '</pre>';
+                    }
                 });
         }
 
         // Fetch the welcome.html content by default
-        loadFileContent('welcome.html');
+        loadFileContent('welcome.html', 'html');
 
         // List of files in the pages directory
         const files = [
@@ -141,10 +153,11 @@
             const link = document.createElement('a');
             link.href = '#';
             link.className = 'menu-link';
-            link.textContent = file.name;
+            link.textContent = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
             link.addEventListener('click', function (event) {
                 event.preventDefault();
-                loadFileContent(file.name);
+                const fileType = file.name.split('.').pop();
+                loadFileContent(file.path, fileType);
             });
             menu.appendChild(link);
         });
