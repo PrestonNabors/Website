@@ -53,6 +53,13 @@
                 });
         }
 
+        // Function to format the file name
+        function formatFileName(fileName) {
+            return fileName.replace(/\.[^/.]+$/, "") // Remove file extension
+                           .replace(/-/g, " ") // Replace hyphens with spaces
+                           .replace(/\b\w/g, char => char.toUpperCase()); // Capitalize first letter of each word
+        }
+
         // Fetch the welcome.html content by default
         loadFileContent('welcome.html', 'html');
 
@@ -69,7 +76,7 @@
                 const link = document.createElement('a');
                 link.href = '#';
                 link.className = 'menu-link';
-                link.textContent = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
+                link.textContent = formatFileName(file.name); // Use formatted file name
                 link.addEventListener('click', function (event) {
                     event.preventDefault();
                     const fileType = file.name.split('.').pop();
