@@ -27,15 +27,17 @@
             z-index: 1000;
         }
         .menu {
-            float: left;
+            position: fixed;
             top: 3rem;
+            left: 0;
             width: 15%;
             background-color: #ddd;
             padding: 1rem .5rem;
             text-align: center;
-            height: 100%;
-            position: fixed;
+            height: calc(100vh - 3rem);
             overflow-y: auto;
+            box-sizing: border-box;
+            z-index: 1000;
         }
         h1 {
             font-size: 2.5rem;
@@ -71,6 +73,7 @@
                 padding: 1rem 0.5rem;
                 position: relative;
                 float: none;
+                height: auto;
             }
             h1 {
                 font-size: 2rem;
