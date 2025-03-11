@@ -1,134 +1,157 @@
-<div class="content" id="content">
-    <!-- Content will be dynamically loaded here -->
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Load header
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.body.insertAdjacentHTML('afterbegin', data);
-                initializeSidebar();
-            })
-            .catch(error => {
-                console.error('Error loading header:', error);
-            });
-
-        // Load footer
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.body.insertAdjacentHTML('beforeend', data);
-            })
-            .catch(error => {
-                console.error('Error loading footer:', error);
-            });
-
-        // Function to fetch and display the content of a file
-        function loadFileContent(filePath, fileType) {
-            fetch(filePath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    if (fileType === 'pdf' || fileType === 'png') {
-                        return response.blob();
-                    } else {
-                        return response.text();
-                    }
-                })
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="header-container">
+        <!-- Header will be dynamically loaded here -->
+    </div>
+    <div id="sidebar-container">
+        <!-- Sidebar will be dynamically loaded here -->
+        <div id="fileMenu"></div>
+    </div>
+    <div id="content-container">
+        <div class="content" id="content">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+    </div>
+    <div id="footer-container">
+        <!-- Footer will be dynamically loaded here -->
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Load header
+            fetch('header.html')
+                .then(response => response.text())
                 .then(data => {
-                    const contentDiv = document.getElementById('content');
-                    if (fileType === 'pdf') {
-                        const url = URL.createObjectURL(data);
-                        contentDiv.innerHTML = `<iframe src="${url}" width="100%" height="600px"></iframe>`;
-                    } else if (fileType === 'png') {
-                        const url = URL.createObjectURL(data);
-                        contentDiv.innerHTML = `<img src="${url}" alt="Image" style="width:100%;">`;
-                    } else {
-                        contentDiv.innerHTML = `<div>${data}</div>`;
-                    }
-                    applyPageSpecificStyles(filePath, fileType);
+                    document.getElementById('header-container').innerHTML = data;
+                    initializeSidebar();
                 })
                 .catch(error => {
-                    const contentDiv = document.getElementById('content');
-                    contentDiv.innerHTML = '<div class="error-message">Error loading content</div>';
-                    console.error('Error loading file content:', error);
+                    console.error('Error loading header:', error);
                 });
-        }
 
-        // Function to apply page-specific styles
-        function applyPageSpecificStyles(filePath, fileType) {
-            // Define styles for specific txt files
-            const txtStyles = `
-                body {
-                    font-family: 'Georgia', serif;
-                    background-color: #f0f0f0;
-                    color: #333;
-                }
-            `;
+            // Load footer
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('footer-container').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading footer:', error);
+                });
 
-            // Apply styles based on file type
-            if (fileType === 'txt') {
-                const styleElement = document.createElement('style');
-                styleElement.innerHTML = txtStyles;
-                document.head.appendChild(styleElement);
-            } else if (fileType === 'html') {
-                // No additional styles needed, HTML files will render their own styles
-            } else if (fileType === 'pdf' || fileType === 'png') {
-                // No additional styles needed for PDF and PNG files
+            // Function to fetch and display the content of a file
+            function loadFileContent(filePath, fileType) {
+                fetch(filePath)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        if (fileType === 'pdf' || fileType === 'png') {
+                            return response.blob();
+                        } else {
+                            return response.text();
+                        }
+                    })
+                    .then(data => {
+                        const contentDiv = document.getElementById('content');
+                        if (fileType === 'pdf') {
+                            const url = URL.createObjectURL(data);
+                            contentDiv.innerHTML = `<iframe src="${url}" width="100%" height="600px"></iframe>`;
+                        } else if (fileType === 'png') {
+                            const url = URL.createObjectURL(data);
+                            contentDiv.innerHTML = `<img src="${url}" alt="Image" style="width:100%;">`;
+                        } else {
+                            contentDiv.innerHTML = `<div>${data}</div>`;
+                        }
+                        applyPageSpecificStyles(filePath, fileType);
+                    })
+                    .catch(error => {
+                        const contentDiv = document.getElementById('content');
+                        contentDiv.innerHTML = '<div class="error-message">Error loading content</div>';
+                        console.error('Error loading file content:', error);
+                    });
             }
-        }
 
-        // Function to format the file name
-        function formatFileName(fileName) {
-            return fileName.replace(/\.[^/.]+$/, "") // Remove file extension
-                           .replace(/-/g, " ") // Replace hyphens with spaces
-                           .replace(/\b\w/g, char => char.toUpperCase()); // Capitalize first letter of each word
-        }
+            // Function to apply page-specific styles
+            function applyPageSpecificStyles(filePath, fileType) {
+                // Define styles for specific txt files
+                const txtStyles = `
+                    body {
+                        font-family: 'Georgia', serif;
+                        background-color: #f0f0f0;
+                        color: #333;
+                    }
+                `;
 
-        // Fetch the welcome.html content by default
-        loadFileContent('welcome.html', 'html');
+                // Apply styles based on file type
+                if (fileType === 'txt') {
+                    const styleElement = document.createElement('style');
+                    styleElement.innerHTML = txtStyles;
+                    document.head.appendChild(styleElement);
+                } else if (fileType === 'html') {
+                    // No additional styles needed, HTML files will render their own styles
+                } else if (fileType === 'pdf' || fileType === 'png') {
+                    // No additional styles needed for PDF and PNG files
+                }
+            }
 
-        // List of files in the pages directory
-        const files = [
-            { name: "about-me.txt", path: "pages/about-me.txt" },
-            { name: "bowl-bear.txt", path: "pages/bowl-bear.txt" },
-            { name: "resume.pdf", path: "pages/resume.pdf" }
-        ];
+            // Function to format the file name
+            function formatFileName(fileName) {
+                return fileName.replace(/\.[^/.]+$/, "") // Remove file extension
+                               .replace(/-/g, " ") // Replace hyphens with spaces
+                               .replace(/\b\w/g, char => char.toUpperCase()); // Capitalize first letter of each word
+            }
 
-        function initializeSidebar() {
-            const menu = document.getElementById('fileMenu');
-            files.forEach(file => {
-                const link = document.createElement('a');
-                link.href = '#';
-                link.className = 'menu-link';
-                link.textContent = formatFileName(file.name); // Use formatted file name
-                link.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    const fileType = file.name.split('.').pop();
-                    loadFileContent(file.path, fileType);
+            // Fetch the welcome.html content by default
+            loadFileContent('welcome.html', 'html');
+
+            // List of files in the pages directory
+            const files = [
+                { name: "about-me.txt", path: "pages/about-me.txt" },
+                { name: "bowl-bear.txt", path: "pages/bowl-bear.txt" },
+                { name: "resume.pdf", path: "pages/resume.pdf" }
+            ];
+
+            function initializeSidebar() {
+                const menu = document.getElementById('fileMenu');
+                files.forEach(file => {
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.className = 'menu-link';
+                    link.textContent = formatFileName(file.name); // Use formatted file name
+                    link.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        const fileType = file.name.split('.').pop();
+                        loadFileContent(file.path, fileType);
+                    });
+                    menu.appendChild(link);
                 });
-                menu.appendChild(link);
-            });
 
-            const menuLinks = document.querySelectorAll(".menu-link");
+                const menuLinks = document.querySelectorAll(".menu-link");
 
-            menuLinks.forEach(function (link) {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
+                menuLinks.forEach(function (link) {
+                    link.addEventListener("click", function (event) {
+                        event.preventDefault();
 
-                    const targetId = link.getAttribute("href");
-                    const targetElement = document.querySelector(targetId);
+                        const targetId = link.getAttribute("href");
+                        const targetElement = document.querySelector(targetId);
 
-                    const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
 
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: "smooth"
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: "smooth"
+                        });
                     });
                 });
-            });
-        }
-    });
-</script>
+            }
+        });
+    </script>
+</body>
+</html>
