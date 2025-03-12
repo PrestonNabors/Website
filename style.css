@@ -18,7 +18,7 @@ body {
 }
 
 #sidebar-container {
-    width: 15%;
+    width: 10%;
     background-color: #ddd;
     height: calc(100vh - 6rem); /* Assuming header and footer are each 3rem high */
     position: fixed;
